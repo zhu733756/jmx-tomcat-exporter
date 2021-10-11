@@ -28,7 +28,12 @@ rules:
     attrNameSnakeCase: true
 ```
 
-## Build tomcat exporter images if needed
+Combine with https://github.com/prometheus/jmx_exporter/tree/master/example_configs/tomcat.yaml
+
+## Other example configs
+Refer to [example configs](https://github.com/prometheus/jmx_exporter/tree/master/example_configs)
+
+## Build exporter images if needed
 
 Refer to https://www.kubernetes.org.cn/8515.html
 
@@ -64,9 +69,6 @@ The follows based on you have installed prometheus-operator:
 kubectl  apply -f tomcat.yaml
 kubectl  apply -f servicemonitor.yaml
 ```
-
-## Other example configs
-Refer to [example configs](https://github.com/prometheus/jmx_exporter/tree/master/example_configs)
 
 ## Deploy jvm dashboard
 ```
