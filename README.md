@@ -28,12 +28,46 @@ rules:
     attrNameSnakeCase: true
 ```
 
-Combine with https://github.com/prometheus/jmx_exporter/tree/master/example_configs/tomcat.yaml
+Combine with [tomcat.yaml](https://github.com/prometheus/jmx_exporter/blob/master/example_configs/tomcat.yml)
+```
+---   
+lowercaseOutputLabelNames: true
+lowercaseOutputName: true
+rules:
+- pattern: 'Catalina<type=GlobalRequestProcessor, name=\"(\w+-\w+)-(\d+)\"><>(\w+):'
+  name: tomcat_$3_total
+  labels:
+    port: "$2"
+    protocol: "$1"
+  help: Tomcat global $3
+  type: COUNTER
+- pattern: 'Catalina<j2eeType=Servlet, WebModule=//([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), name=([-a-zA-Z0-9+/$%~_-|!.]*), J2EEApplication=none, J2EEServer=none><>(requestCount|maxTime|processingTime|errorCount):'
+  name: tomcat_servlet_$3_total
+  labels:
+    module: "$1"
+    servlet: "$2"
+  help: Tomcat servlet $3 total
+  type: COUNTER
+- pattern: 'Catalina<type=ThreadPool, name="(\w+-\w+)-(\d+)"><>(currentThreadCount|currentThreadsBusy|keepAliveCount|pollerThreadCount|connectionCount):'
+  name: tomcat_threadpool_$3
+  labels:
+    port: "$2"
+    protocol: "$1"
+  help: Tomcat threadpool $3
+  type: GAUGE
+- pattern: 'Catalina<type=Manager, host=([-a-zA-Z0-9+&@#/%?=~_|!:.,;]*[-a-zA-Z0-9+&@#/%=~_|]), context=([-a-zA-Z0-9+/$%~_-|!.]*)><>(processingTime|sessionCounter|rejectedSessions|expiredSessions):'
+  name: tomcat_session_$3_total
+  labels:
+    context: "$2"
+    host: "$1"
+  help: Tomcat session $3 total
+  type: COUNTER
+```
 
 ## Other example configs
 Refer to [example configs](https://github.com/prometheus/jmx_exporter/tree/master/example_configs)
 
-## Build exporter images if needed
+## Build exporter image with above configuration if needed
 
 Refer to https://www.kubernetes.org.cn/8515.html
 
@@ -55,7 +89,7 @@ FROM ccr.ccs.tencentyun.com/imroc/tomcat:jdk8
 ADD prometheus-jmx-config.yaml /prometheus-jmx-config.yaml
 ```
 
-Build steps:
+Build cmdline:
 ```
 docker build . -t zhu733756/jmx-tomcat-exporter:latest -f Dockerfile.quick
 ```
