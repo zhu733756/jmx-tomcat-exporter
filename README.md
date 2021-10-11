@@ -1,4 +1,4 @@
-# jmx-exporter
+# jmx-tomcat-exporter
 Quickly deploy jmx exporter in Kubesphere v3.0.0+
 
 ## Install Kubesphere dashboard CRDs if lack of these CRDs
@@ -28,7 +28,7 @@ rules:
     attrNameSnakeCase: true
 ```
 
-## Build exporter images if needed
+## Build tomcat exporter images if needed
 
 Refer to https://www.kubernetes.org.cn/8515.html
 
@@ -56,7 +56,7 @@ docker build . -t zhu733756/jmx-tomcat-exporter:latest -f Dockerfile.quick
 ```
 If you don't want to build it, you can use `zhu733756/jmx-tomcat-exporter:latest` directly.
 
-## Deploy exporter and servicemonitor
+## Deploy tomcat exporter and servicemonitor
 
 The follows based on you have installed prometheus-operator:
 
@@ -64,6 +64,9 @@ The follows based on you have installed prometheus-operator:
 kubectl  apply -f tomcat.yaml
 kubectl  apply -f servicemonitor.yaml
 ```
+
+## Other example configs
+Refer to [example configs](https://github.com/prometheus/jmx_exporter/tree/master/example_configs)
 
 ## Deploy jvm dashboard
 ```
