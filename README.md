@@ -71,4 +71,4 @@ kubectl apply -f dashboard.yaml
 ```
 Will see as follows:
 
-[!img](https://github.com/zhu733756/jmx-exporter/blob/master/png/kubesphere-jvm-dashboard.yaml)
+![img](https://github.com/zhu733756/jmx-exporter/blob/master/png/kubesphere-jvm-dashboard.jpg "kubesphere-jvm-dashboard.jpg")
