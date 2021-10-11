@@ -1,0 +1,2 @@
+FROM ccr.ccs.tencentyun.com/imroc/tomcat:jdk8
+ADD prometheus-jmx-config.yaml /prometheus-jmx-config.yaml

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - name: tomcat
+        image: zhu733756/jmx-tomcat-exporter:latest
+        env:
+        - name: JAVA_OPTS
+          value: "-javaagent:/jmx_prometheus_javaagent-0.13.0.jar=8088:/prometheus-jmx-config.yaml"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat
+  labels:
+    app: tomcat
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    protocol: TCP
+    name: http
+  - port: 8088
+    protocol: TCP
+    name: jmx-metrics
+  selector:
+    app: tomcat
