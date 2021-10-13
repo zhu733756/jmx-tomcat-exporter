@@ -1,8 +1,7 @@
 apiVersion: monitoring.kubesphere.io/v1alpha2
-kind: Dashboard
+kind: ClusterDashboard
 metadata:
   name: jvm-dashboard
-  namespace: default
 spec:
   panels:
   - colors:
